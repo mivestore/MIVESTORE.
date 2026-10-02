@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIVÉ - Dress Your Vibe | Thời Trang Nữ Cao Cấp</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mive: {
+                            bg: '#FBF9F6',
+                            card: '#FFFFFF',
+                            primary: '#2C2523',
+                            secondary: '#5C524E',
+                            accent: '#C5A880',
+                            accentHover: '#A88D67',
+                            lightBeige: '#F3EDE6',
+                            border: '#E8E2D9',
+                            muted: '#8C827A'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FBF9F6;
+            color: #2C2523;
+        }
+        .font-serif-title {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FBF9F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4C5B9;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A89280;
+        }
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        .accordion-content.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-mive-accent selection:text-white">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-20 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Announcement Bar -->
+    <div class="bg-mive-primary text-mive-bg text-xs tracking-widest text-center py-2 px-4 uppercase font-medium">
+        FREESHIP ĐƠN TỪ 490K &nbsp;|&nbsp; ĐỔI TRẢ DỄ DÀNG TRONG 7 NGÀY &nbsp;|&nbsp; HOTLINE: 1900 8888
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-40 bg-mive-bg/90 backdrop-blur-md border-b border-mive-border transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-mive-primary hover:text-mive-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+
+                <!-- Brand Logo -->
+                <a href="#" onclick="navigateTo('home'); return false;" class="flex flex-col items-center group">
+                    <span class="font-serif-title text-3xl sm:text-4xl tracking-widest font-bold text-mive-primary group-hover:text-mive-accent transition-colors">MIVÉ</span>
+                    <span class="text-[9px] tracking-[0.25em] text-mive-muted uppercase -mt-1 font-medium">dress your vibe</span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex space-x-8 text-sm uppercase tracking-wider font-medium">
+                    <a href="#" onclick="navigateTo('home')" id="nav-home" class="nav-link py-1 border-b-2 border-mive-primary transition-all">Trang Chủ</a>
+                    <a href="#" onclick="navigateTo('shop')" id="nav-shop" class="nav-link py-1 border-b-2 border-transparent hover:border-mive-primary transition-all">Shop</a>
+                    <a href="#" onclick="navigateTo('detail')" id="nav-detail" class="nav-link py-1 border-b-2 border-transparent hover:border-mive-primary transition-all">Sản Phẩm</a>
+                    <a href="#" onclick="navigateTo('cart')" id="nav-cart" class="nav-link py-1 border-b-2 border-transparent hover:border-mive-primary transition-all">Giỏ Hàng</a>
+                    <a href="#" onclick="navigateTo('auth')" id="nav-auth" class="nav-link py-1 border-b-2 border-transparent hover:border-mive-primary transition-all">Tài Khoản</a>
+                </nav>
+
+                <!-- Header Actions Icons -->
+                <div class="flex items-center space-x-4 sm:space-x-6 text-mive-primary">
+                    <button class="hover:text-mive-accent transition-colors hidden sm:block" title="Tìm kiếm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </button>
+                    <button class="hover:text-mive-accent transition-colors relative" title="Yêu thích">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-4.564-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        <span id="wishlist-count" class="absolute -top-2 -right-2 bg-mive-accent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    </button>
+                    <a href="#" onclick="navigateTo('cart')" class="hover:text-mive-accent transition-colors relative" title="Giỏ hàng">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <span id="cart-badge" class="absolute -top-2 -right-2 bg-mive-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+                    </a>
+                    <a href="#" onclick="navigateTo('auth')" class="hover:text-mive-accent transition-colors hidden sm:block" title="Tài khoản">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-mive-bg border-b border-mive-border px-6 py-4 space-y-3">
+            <a href="#" onclick="navigateTo('home'); closeMobileMenu()" class="block text-sm uppercase tracking-wider py-1 font-medium text-mive-primary">Trang Chủ</a>
+            <a href="#" onclick="navigateTo('shop'); closeMobileMenu()" class="block text-sm uppercase tracking-wider py-1 font-medium text-mive-primary">Shop</a>
+            <a href="#" onclick="navigateTo('detail'); closeMobileMenu()" class="block text-sm uppercase tracking-wider py-1 font-medium text-mive-primary">Chi Tiết Sản Phẩm</a>
+            <a href="#" onclick="navigateTo('cart'); closeMobileMenu()" class="block text-sm uppercase tracking-wider py-1 font-medium text-mive-primary">Giỏ Hàng</a>
+            <a href="#" onclick="navigateTo('auth'); closeMobileMenu()" class="block text-sm uppercase tracking-wider py-1 font-medium text-mive-primary">Tài Khoản / Đăng Nhập</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        
+        <!-- TRANG 1: TRANG CHỦ -->
+        <section id="page-home" class="page-view">
+            <!-- Banner Chính -->
+            <div class="relative bg-[#EFEBE6] min-h-[500px] md:min-h-[620px] flex items-center overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 relative z-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-6 max-w-xl">
+                            <span class="inline-block text-xs uppercase tracking-[0.3em] text-mive-accent font-semibold">Bộ Sưu Tập Mới 2026</span>
+                            <h1 class="font-serif-title text-5xl sm:text-6xl md:text-7xl font-light text-mive-primary leading-tight">
+                                DRESS YOUR <span class="italic font-normal">VIBE</span>
+                            </h1>
+                            <p class="text-mive-secondary text-base sm:text-lg tracking-wide font-light">
+                                Thể hiện cá tính & thần thái thanh lịch riêng biệt thông qua những thiết kế tối giản, tinh tế từng đường kim mũi chỉ.
+                            </p>
+                            <div class="pt-4">
+                                <button onclick="navigateTo('shop')" class="bg-mive-primary text-white text-xs uppercase tracking-[0.2em] px-8 py-4 hover:bg-mive-accent transition-all duration-300 shadow-sm">
+                                    SHOP NOW
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative flex justify-center md:justify-end">
+                            <div class="w-full max-w-md h-[450px] md:h-[520px] bg-mive-lightBeige overflow-hidden rounded-t-full shadow-lg relative">
+                                <img src="https://tse4.mm.bing.net/th/id/OIP.t5RB84yoQukMH_x6QzrrqwHaJ3?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" 
+                                     alt="MIVÉ Hero Fashion Model" 
+                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shop By Category -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif-title text-3xl sm:text-4xl text-mive-primary uppercase tracking-widest font-medium">SHOP BY CATEGORY</h2>
+                    <div class="w-12 h-0.5 bg-mive-accent mx-auto mt-3"></div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                    <div onclick="goToCategory('Áo')" class="group cursor-pointer relative overflow-hidden bg-mive-card shadow-sm rounded-sm">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img src="https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mr8ul4w6ed5115.webp" alt="Áo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-4 flex justify-between items-center bg-white border-t border-mive-border">
+                            <span class="font-serif-title text-lg uppercase tracking-wider text-mive-primary font-semibold">ÁO</span>
+                            <span class="text-xs text-mive-accent group-hover:translate-x-1 transition-transform">➔</span>
+                        </div>
+                    </div>
+                    <div onclick="goToCategory('Quần')" class="group cursor-pointer relative overflow-hidden bg-mive-card shadow-sm rounded-sm">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img src="https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mosh4dopjsi3a1.webp" alt="Quần" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-4 flex justify-between items-center bg-white border-t border-mive-border">
+                            <span class="font-serif-title text-lg uppercase tracking-wider text-mive-primary font-semibold">QUẦN</span>
+                            <span class="text-xs text-mive-accent group-hover:translate-x-1 transition-transform">➔</span>
+                        </div>
+                    </div>
+                    <div onclick="goToCategory('Váy')" class="group cursor-pointer relative overflow-hidden bg-mive-card shadow-sm rounded-sm">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img src="https://file.hstatic.net/200000503583/file/vay-lua-9_8791cabb8fd341e795ff4f8ed9ce62f0.jpg" alt="Váy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-4 flex justify-between items-center bg-white border-t border-mive-border">
+                            <span class="font-serif-title text-lg uppercase tracking-wider text-mive-primary font-semibold">VÁY / DRESS</span>
+                            <span class="text-xs text-mive-accent group-hover:translate-x-1 transition-transform">➔</span>
+                        </div>
+                    </div>
+                    <div onclick="goToCategory('Set')" class="group cursor-pointer relative overflow-hidden bg-mive-card shadow-sm rounded-sm">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img src="https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mi7v9mnz6i2wc1.webp" alt="Set Đồ" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-4 flex justify-between items-center bg-white border-t border-mive-border">
+                            <span class="font-serif-title text-lg uppercase tracking-wider text-mive-primary font-semibold">SET BLAZER</span>
+                            <span class="text-xs text-mive-accent group-hover:translate-x-1 transition-transform">➔</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Arrivals -->
+            <div class="bg-white py-16 sm:py-24 border-y border-mive-border">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-end mb-10">
+                        <div>
+                            <span class="text-xs uppercase tracking-widest text-mive-accent font-semibold">Sản phẩm mới</span>
+                            <h2 class="font-serif-title text-3xl sm:text-4xl text-mive-primary uppercase tracking-wider mt-1">NEW ARRIVALS</h2>
+                        </div>
+                        <a href="#" onclick="navigateTo('shop')" class="text-xs uppercase tracking-widest border-b border-mive-primary hover:border-mive-accent hover:text-mive-accent transition-colors pb-0.5">Xem tất cả ➔</a>
+                    </div>
+                    <div id="home-products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"></div>
+                </div>
+            </div>
+
+            <!-- Trending Banner -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="relative bg-mive-lightBeige p-8 md:p-16 flex flex-col md:flex-row items-center justify-between border border-mive-border overflow-hidden">
+                    <div class="space-y-4 max-w-lg z-10 text-center md:text-left mb-8 md:mb-0">
+                        <span class="text-xs tracking-[0.3em] uppercase text-mive-accent font-bold">Trending Now</span>
+                        <h3 class="font-serif-title text-3xl sm:text-5xl text-mive-primary">DISCOVER YOUR STYLE</h3>
+                        <p class="text-mive-secondary text-sm leading-relaxed">Cập nhật xu hướng thời trang mùa thu đông với gam màu kem & be tự nhiên, thanh lịch trong từng chuyển động.</p>
+                        <div>
+                            <button onclick="navigateTo('shop')" class="bg-mive-primary text-white text-xs uppercase tracking-widest px-8 py-3.5 hover:bg-mive-accent transition-colors">Khám Phá Ngay</button>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80" alt="Discover style" class="w-full max-w-sm h-72 object-cover shadow-md rounded">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose Us -->
+            <div class="border-t border-mive-border py-12 bg-mive-bg">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <div class="p-6 space-y-3">
+                            <div class="w-12 h-12 mx-auto text-mive-accent flex items-center justify-center">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M5 8h14M5 8a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v1H5zm0 0v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+                            </div>
+                            <h4 class="font-serif-title text-xl uppercase font-semibold text-mive-primary">FREESHIP ĐƠN TỪ 490K</h4>
+                            <p class="text-xs text-mive-muted leading-relaxed">Miễn phí giao hàng toàn quốc cho tất cả các đơn hàng đạt từ 490.000đ.</p>
+                        </div>
+                        <div class="p-6 space-y-3 border-y md:border-y-0 md:border-x border-mive-border">
+                            <div class="w-12 h-12 mx-auto text-mive-accent flex items-center justify-center">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            </div>
+                            <h4 class="font-serif-title text-xl uppercase font-semibold text-mive-primary">ĐỔI TRẢ DỄ DÀNG</h4>
+                            <p class="text-xs text-mive-muted leading-relaxed">Hỗ trợ đổi size hoặc sản phẩm mới trong vòng 7 ngày kể từ ngày nhận hàng.</p>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="w-12 h-12 mx-auto text-mive-accent flex items-center justify-center">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                            </div>
+                            <h4 class="font-serif-title text-xl uppercase font-semibold text-mive-primary">CHẤT LƯỢNG CAO CẤP</h4>
+                            <p class="text-xs text-mive-muted leading-relaxed">Được cắt may tỉ mỉ trên chất liệu cao cấp chuẩn xu hướng Minimalist/Luxury.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRANG 2: SHOP -->
+        <section id="page-shop" class="page-view hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <nav class="text-xs text-mive-muted mb-6">
+                    <a href="#" onclick="navigateTo('home')" class="hover:text-mive-primary">Trang chủ</a> / <span class="text-mive-primary font-medium">Shop All</span>
+                </nav>
+
+                <div class="text-center mb-10">
+                    <h1 class="font-serif-title text-4xl sm:text-5xl text-mive-primary tracking-widest uppercase font-light">CỬA HÀNG / SHOP</h1>
+                    <p class="text-xs text-mive-muted mt-2 tracking-wider">Khám phá các sản phẩm thời trang phong cách Minimalism & Luxury</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <!-- Bộ lọc bên trái -->
+                    <div class="lg:col-span-1 space-y-8 bg-white p-6 border border-mive-border rounded-sm h-fit">
+                        <div>
+                            <h3 class="font-serif-title text-lg font-semibold uppercase tracking-wider text-mive-primary border-b border-mive-border pb-2 mb-4">DANH MỤC</h3>
+                            <ul class="space-y-2 text-sm text-mive-secondary">
+                                <li><button onclick="filterCategory('all')" class="cat-btn font-medium hover:text-mive-accent text-mive-primary">Tất cả sản phẩm</button></li>
+                                <li><button onclick="filterCategory('Áo')" class="cat-btn hover:text-mive-accent">Áo nữ</button></li>
+                                <li><button onclick="filterCategory('Quần')" class="cat-btn hover:text-mive-accent">Quần nữ</button></li>
+                                <li><button onclick="filterCategory('Váy')" class="cat-btn hover:text-mive-accent">Váy & Đầm</button></li>
+                                <li><button onclick="filterCategory('Set')" class="cat-btn hover:text-mive-accent">Set Blazer / Suit</button></li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="font-serif-title text-lg font-semibold uppercase tracking-wider text-mive-primary border-b border-mive-border pb-2 mb-4">KÍCH CỠ</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="toggleSizeFilter('S')" class="border border-mive-border w-10 h-10 text-xs text-mive-primary hover:border-mive-primary transition-colors">S</button>
+                                <button onclick="toggleSizeFilter('M')" class="border border-mive-border w-10 h-10 text-xs text-mive-primary hover:border-mive-primary transition-colors">M</button>
+                                <button onclick="toggleSizeFilter('L')" class="border border-mive-border w-10 h-10 text-xs text-mive-primary hover:border-mive-primary transition-colors">L</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="font-serif-title text-lg font-semibold uppercase tracking-wider text-mive-primary border-b border-mive-border pb-2 mb-4">MÀU SẮC</h3>
+                            <div class="flex gap-3">
+                                <button onclick="filterColor('Trắng')" class="w-7 h-7 rounded-full bg-white border border-gray-400 focus:ring-2 focus:ring-mive-accent" title="Trắng"></button>
+                                <button onclick="filterColor('Be')" class="w-7 h-7 rounded-full bg-[#E5D3B3] border border-transparent focus:ring-2 focus:ring-mive-accent" title="Be"></button>
+                                <button onclick="filterColor('Nâu')" class="w-7 h-7 rounded-full bg-[#795548] border border-transparent focus:ring-2 focus:ring-mive-accent" title="Nâu"></button>
+                                <button onclick="filterColor('Đen')" class="w-7 h-7 rounded-full bg-black border border-transparent focus:ring-2 focus:ring-mive-accent" title="Đen"></button>
+                            </div>
+                        </div>
+
+                        <button onclick="resetFilters()" class="w-full text-xs uppercase tracking-widest py-2.5 border border-mive-primary text-mive-primary hover:bg-mive-primary hover:text-white transition-colors">
+                            Xóa bộ lọc
+                        </button>
+                    </div>
+
+                    <!-- Danh sách sản phẩm -->
+                    <div class="lg:col-span-3">
+                        <div class="flex flex-col sm:flex-row justify-between items-center bg-white p-4 border border-mive-border mb-6 gap-4">
+                            <span class="text-xs text-mive-muted" id="product-count-label">Hiển thị 31 sản phẩm</span>
+                            <div class="flex items-center space-x-2">
+                                <label class="text-xs uppercase text-mive-secondary font-medium">Sắp xếp:</label>
+                                <select id="sort-select" onchange="sortProducts()" class="text-xs bg-mive-bg border border-mive-border py-1.5 px-3 focus:outline-none">
+                                    <option value="featured">Nổi bật nhất</option>
+                                    <option value="price-asc">Giá: Thấp đến Cao</option>
+                                    <option value="price-desc">Giá: Cao đến Thấp</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="shop-products-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRANG 3: CHI TIẾT SẢN PHẨM -->
+        <section id="page-detail" class="page-view hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <nav class="text-xs text-mive-muted mb-8">
+                    <a href="#" onclick="navigateTo('home')" class="hover:text-mive-primary">Trang chủ</a> / 
+                    <a href="#" onclick="navigateTo('shop')" class="hover:text-mive-primary">Shop</a> / 
+                    <span id="detail-breadcrumb" class="text-mive-primary font-medium">Set Cổ Yếm Phối Váy Lụa</span>
+                </nav>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
+                    <!-- Ảnh sản phẩm -->
+                    <div class="flex flex-col-reverse md:flex-row gap-4">
+                        <div id="detail-thumbnails" class="flex md:flex-col gap-3 justify-center"></div>
+                        <div class="flex-1 bg-white border border-mive-border overflow-hidden">
+                            <img id="detail-main-img" src="https://file.hstatic.net/200000503583/file/vay-lua-9_8791cabb8fd341e795ff4f8ed9ce62f0.jpg" alt="Detail Image" class="w-full h-[500px] object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Thông tin mua hàng -->
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-xs uppercase tracking-widest text-mive-accent font-semibold">Thương Hiệu MIVÉ</span>
+                            <h1 id="detail-title" class="font-serif-title text-3xl sm:text-4xl text-mive-primary font-medium mt-1">SET CỔ YẾM PHỐI VÁY LỤA</h1>
+                            <p id="detail-price" class="text-2xl font-semibold text-mive-primary mt-2">550.000đ</p>
+                        </div>
+
+                        <p class="text-xs text-mive-secondary leading-relaxed border-y border-mive-border py-4">
+                            Áo thun phong cách Minimalist chất liệu 100% Cotton thoáng mát, co giãn nhẹ. Thiết kế phom dáng mềm mại phù hợp mặc hằng ngày hoặc phối cùng Blazer sang trọng.
+                        </p>
+
+                        <div>
+                            <label class="text-xs font-semibold uppercase tracking-wider text-mive-primary block mb-2">Màu Sắc: <span id="selected-color-name" class="font-normal text-mive-muted">Mặc định</span></label>
+                            <div id="detail-color-options" class="flex flex-wrap gap-3"></div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-mive-primary">Kích Thước</label>
+                                <button onclick="alert('Hướng dẫn chọn size: S (40-48kg), M (49-55kg), L (56-62kg), XL (63-70kg)')" class="text-[11px] text-mive-accent underline">Bảng quy đổi size</button>
+                            </div>
+                            <div class="flex gap-3">
+                                <button onclick="selectDetailSize('S', this)" data-size="S" class="detail-size-btn border border-mive-border w-12 h-12 text-xs font-medium text-mive-primary hover:border-mive-primary">S</button>
+                                <button onclick="selectDetailSize('M', this)" data-size="M" class="detail-size-btn border-2 border-mive-primary w-12 h-12 text-xs font-semibold text-mive-primary">M</button>
+                                <button onclick="selectDetailSize('L', this)" data-size="L" class="detail-size-btn border border-mive-border w-12 h-12 text-xs font-medium text-mive-primary hover:border-mive-primary">L</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-semibold uppercase tracking-wider text-mive-primary block mb-2">Số Lượng</label>
+                            <div class="flex items-center border border-mive-border w-32 bg-white">
+                                <button onclick="adjustDetailQty(-1)" class="w-10 h-10 flex items-center justify-center text-mive-primary hover:bg-mive-lightBeige">-</button>
+                                <span id="detail-qty" class="flex-1 text-center text-xs font-semibold">1</span>
+                                <button onclick="adjustDetailQty(1)" class="w-10 h-10 flex items-center justify-center text-mive-primary hover:bg-mive-lightBeige">+</button>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex flex-col sm:flex-row gap-4">
+                            <button onclick="addCurrentDetailToCart()" class="flex-1 bg-mive-primary text-white text-xs uppercase tracking-widest py-4 font-semibold hover:bg-mive-accent transition-colors shadow-sm">
+                                THÊM VÀO GIỎ HÀNG
+                            </button>
+                            <button onclick="addCurrentDetailToCart(); navigateTo('cart');" class="flex-1 border border-mive-primary text-mive-primary text-xs uppercase tracking-widest py-4 font-semibold hover:bg-mive-primary hover:text-white transition-colors">
+                                MUA NGAY
+                            </button>
+                        </div>
+
+                        <!-- Accordion -->
+                        <div class="border-t border-mive-border pt-4 space-y-3">
+                            <div class="border-b border-mive-border pb-3">
+                                <button onclick="toggleAccordion('acc-desc')" class="flex justify-between items-center w-full text-xs font-semibold uppercase tracking-wider text-mive-primary">
+                                    <span>MÔ TẢ SẢN PHẨM</span>
+                                    <span id="acc-desc-icon">+</span>
+                                </button>
+                                <div id="acc-desc" class="accordion-content text-xs text-mive-secondary mt-2 leading-relaxed">
+                                    Sản phẩm được thiết kế tối giản, tinh tế từng chi tiết nhỏ. Dễ dàng kết hợp với nhiều trang phục khác nhau để đi làm, đi chơi hay dự tiệc nhẹ.
+                                </div>
+                            </div>
+                            <div class="border-b border-mive-border pb-3">
+                                <button onclick="toggleAccordion('acc-care')" class="flex justify-between items-center w-full text-xs font-semibold uppercase tracking-wider text-mive-primary">
+                                    <span>HƯỚNG DẪN BẢO QUẢN</span>
+                                    <span id="acc-care-icon">+</span>
+                                </button>
+                                <div id="acc-care" class="accordion-content text-xs text-mive-secondary mt-2 leading-relaxed">
+                                    - Giặt máy ở chế độ nhẹ nhàng.<br>- Không sử dụng chất tẩy mạnh.<br>- Là/ủi ở nhiệt độ trung bình dưới 110 độ C.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRANG 4: GIỎ HÀNG -->
+        <section id="page-cart" class="page-view hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <h1 class="font-serif-title text-4xl text-mive-primary uppercase tracking-widest text-center mb-8 font-light">GIỎ HÀNG CỦA BẠN</h1>
+
+                <!-- Thanh tiến trình Freeship -->
+                <div class="max-w-2xl mx-auto bg-white p-4 border border-mive-border mb-8 text-center rounded-sm">
+                    <p id="freeship-text" class="text-xs text-mive-primary mb-2 font-medium">Bạn cần mua thêm <span class="font-bold text-mive-accent" id="freeship-needed">191.000đ</span> để nhận FREESHIP!</p>
+                    <div class="w-full bg-mive-lightBeige h-2 rounded-full overflow-hidden">
+                        <div id="freeship-bar" class="bg-mive-accent h-full transition-all duration-500" style="width: 60%;"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Danh sách giỏ hàng -->
+                    <div class="lg:col-span-2 bg-white border border-mive-border p-6 rounded-sm">
+                        <div id="cart-items-container" class="space-y-6"></div>
+                        <div id="empty-cart-msg" class="hidden text-center py-12 space-y-4">
+                            <p class="text-mive-muted text-sm">Giỏ hàng của bạn đang trống.</p>
+                            <button onclick="navigateTo('shop')" class="bg-mive-primary text-white text-xs uppercase tracking-widest px-6 py-3">Tiếp tục mua sắm</button>
+                        </div>
+                    </div>
+
+                    <!-- Tóm tắt đơn hàng -->
+                    <div class="bg-white border border-mive-border p-6 rounded-sm space-y-6 h-fit">
+                        <h3 class="font-serif-title text-xl uppercase font-semibold border-b border-mive-border pb-3 text-mive-primary">TỔNG ĐƠN HÀNG</h3>
+                        
+                        <div class="flex gap-2">
+                            <input type="text" id="coupon-input" placeholder="Mã giảm giá" class="flex-1 text-xs border border-mive-border px-3 py-2 uppercase focus:outline-none focus:border-mive-primary">
+                            <button onclick="applyCoupon()" class="bg-mive-primary text-white text-xs uppercase px-4 py-2 hover:bg-mive-accent transition-colors">Áp dụng</button>
+                        </div>
+
+                        <div class="space-y-3 text-sm border-b border-mive-border pb-4">
+                            <div class="flex justify-between text-mive-secondary">
+                                <span>Tạm tính</span>
+                                <span id="cart-subtotal" class="font-semibold text-mive-primary">0đ</span>
+                            </div>
+                            <div class="flex justify-between text-mive-secondary">
+                                <span>Phí vận chuyển</span>
+                                <span id="cart-shipping" class="font-semibold text-mive-primary">30.000đ</span>
+                            </div>
+                            <div id="discount-row" class="hidden flex justify-between text-green-700 font-medium">
+                                <span>Giảm giá (MIVENEW)</span>
+                                <span id="cart-discount">-50.000đ</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between text-base font-bold text-mive-primary">
+                            <span>TỔNG THANH TOÁN</span>
+                            <span id="cart-grand-total" class="text-xl text-mive-accent">0đ</span>
+                        </div>
+
+                        <button onclick="processCheckout()" class="w-full bg-mive-primary text-white text-xs uppercase tracking-widest py-4 font-semibold hover:bg-mive-accent transition-colors">
+                            TIẾN HÀNH THANH TOÁN
+                        </button>
+
+                        <p class="text-[11px] text-mive-muted text-center italic">Đã bao gồm thuế GTGT & hỗ trợ giao hàng tận nơi</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRANG 5: ĐĂNG NHẬP / ĐĂNG KÝ -->
+        <section id="page-auth" class="page-view hidden">
+            <div class="max-w-5xl mx-auto px-4 py-12">
+                <div class="bg-white border border-mive-border shadow-sm rounded-sm overflow-hidden grid grid-cols-1 md:grid-cols-2">
+                    <div class="relative bg-mive-lightBeige hidden md:block">
+                        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80" alt="MIVÉ Auth" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-8 text-white">
+                            <span class="font-serif-title text-3xl font-bold tracking-widest">MIVÉ</span>
+                            <p class="text-xs uppercase tracking-widest opacity-90 mt-1">Đăng ký thành viên để nhận ưu đãi 10% đơn hàng đầu tiên</p>
+                        </div>
+                    </div>
+
+                    <div class="p-8 sm:p-12">
+                        <div class="flex border-b border-mive-border mb-8">
+                            <button id="tab-login" onclick="switchAuthTab('login')" class="flex-1 pb-3 text-xs uppercase tracking-widest font-bold border-b-2 border-mive-primary text-mive-primary">Đăng Nhập</button>
+                            <button id="tab-register" onclick="switchAuthTab('register')" class="flex-1 pb-3 text-xs uppercase tracking-widest font-bold border-b-2 border-transparent text-mive-muted hover:text-mive-primary">Đăng Ký</button>
+                        </div>
+
+                        <form id="form-login" onsubmit="handleAuthSubmit(event, 'login')" class="space-y-4">
+                            <div>
+                                <label class="text-xs uppercase font-medium text-mive-primary block mb-1">Email / Số điện thoại</label>
+                                <input type="text" required class="w-full text-xs border border-mive-border px-3 py-2.5 focus:outline-none focus:border-mive-primary" placeholder="nhapemail@domain.com">
+                            </div>
+                            <div>
+                                <label class="text-xs uppercase font-medium text-mive-primary block mb-1">Mật khẩu</label>
+                                <input type="password" required class="w-full text-xs border border-mive-border px-3 py-2.5 focus:outline-none focus:border-mive-primary" placeholder="••••••••">
+                            </div>
+                            <div class="flex justify-between items-center text-xs">
+                                <label class="flex items-center text-mive-secondary cursor-pointer">
+                                    <input type="checkbox" class="mr-2 accent-mive-primary"> Ghi nhớ đăng nhập
+                                </label>
+                                <a href="#" onclick="alert('Vui lòng kiểm tra email khôi phục mật khẩu!'); return false;" class="text-mive-accent underline">Quên mật khẩu?</a>
+                            </div>
+                            <button type="submit" class="w-full bg-mive-primary text-white text-xs uppercase tracking-widest py-3.5 font-semibold hover:bg-mive-accent transition-colors mt-4">
+                                ĐĂNG NHẬP
+                            </button>
+                        </form>
+
+                        <form id="form-register" onsubmit="handleAuthSubmit(event, 'register')" class="space-y-4 hidden">
+                            <div>
+                                <label class="text-xs uppercase font-medium text-mive-primary block mb-1">Họ và Tên</label>
+                                <input type="text" required class="w-full text-xs border border-mive-border px-3 py-2.5 focus:outline-none focus:border-mive-primary" placeholder="Nguyễn Văn A">
+                            </div>
+                            <div>
+                                <label class="text-xs uppercase font-medium text-mive-primary block mb-1">Email</label>
+                                <input type="email" required class="w-full text-xs border border-mive-border px-3 py-2.5 focus:outline-none focus:border-mive-primary" placeholder="email@domain.com">
+                            </div>
+                            <div>
+                                <label class="text-xs uppercase font-medium text-mive-primary block mb-1">Mật khẩu</label>
+                                <input type="password" required class="w-full text-xs border border-mive-border px-3 py-2.5 focus:outline-none focus:border-mive-primary" placeholder="••••••••">
+                            </div>
+                            <div class="text-xs text-mive-secondary">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" required class="mr-2 accent-mive-primary"> Tôi đồng ý với Điều khoản & Chính sách MIVÉ
+                                </label>
+                            </div>
+                            <button type="submit" class="w-full bg-mive-primary text-white text-xs uppercase tracking-widest py-3.5 font-semibold hover:bg-mive-accent transition-colors mt-4">
+                                TẠO TÀI KHOẢN
+                            </button>
+                        </form>
+
+                        <div class="mt-6 text-center">
+                            <span class="text-xs text-mive-muted relative px-2 bg-white">Hoặc đăng nhập với</span>
+                            <div class="grid grid-cols-2 gap-3 mt-4">
+                                <button onclick="alert('Đăng nhập Google thành công!'); navigateTo('home');" class="border border-mive-border py-2 text-xs font-medium hover:bg-mive-lightBeige transition-colors">Google</button>
+                                <button onclick="alert('Đăng nhập Facebook thành công!'); navigateTo('home');" class="border border-mive-border py-2 text-xs font-medium hover:bg-mive-lightBeige transition-colors">Facebook</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-mive-primary text-mive-bg pt-16 pb-8 border-t border-mive-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="space-y-4">
+                    <span class="font-serif-title text-3xl tracking-widest font-bold">MIVÉ</span>
+                    <p class="text-xs text-mive-border leading-relaxed">Thời trang Minimalism & Luxury nữ tính. Dress Your Vibe - Tỏa sáng theo phong cách riêng của bạn.</p>
+                    <div class="flex space-x-4 text-sm text-mive-accent">
+                        <a href="#" class="hover:text-white">Facebook</a>
+                        <a href="#" class="hover:text-white">Instagram</a>
+                        <a href="#" class="hover:text-white">TikTok</a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-xs uppercase tracking-widest font-bold mb-4 text-mive-accent">Về Chúng Tôi</h5>
+                    <ul class="space-y-2 text-xs text-mive-border">
+                        <li><a href="#" class="hover:underline">Giới thiệu MIVÉ</a></li>
+                        <li><a href="#" class="hover:underline">Bộ sưu tập mới</a></li>
+                        <li><a href="#" class="hover:underline">Tuyển dụng</a></li>
+                        <li><a href="#" class="hover:underline">Hệ thống cửa hàng</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs uppercase tracking-widest font-bold mb-4 text-mive-accent">Hỗ Trợ Khách Hàng</h5>
+                    <ul class="space-y-2 text-xs text-mive-border">
+                        <li><a href="#" class="hover:underline">Hướng dẫn mua hàng</a></li>
+                        <li><a href="#" class="hover:underline">Chính sách đổi trả trong 7 ngày</a></li>
+                        <li><a href="#" class="hover:underline">Chính sách bảo mật</a></li>
+                        <li><a href="#" class="hover:underline">Câu hỏi thường gặp (FAQ)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs uppercase tracking-widest font-bold mb-4 text-mive-accent">Đăng Ký Nhận Tin</h5>
+                    <p class="text-xs text-mive-border mb-3">Nhận thông tin ưu đãi & BST mới sớm nhất.</p>
+                    <form onsubmit="event.preventDefault(); showToast('Cảm ơn bạn đã đăng ký nhận tin!');" class="flex">
+                        <input type="email" placeholder="Email của bạn" required class="bg-white/10 text-xs px-3 py-2 text-white placeholder-mive-border border border-white/20 focus:outline-none w-full">
+                        <button type="submit" class="bg-mive-accent text-white px-4 text-xs font-semibold hover:bg-mive-accentHover">GỬI</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-6 text-center text-[11px] text-mive-border">
+                © 2026 MIVÉ Fashion. All rights reserved. Designed with Minimalist Luxury Aesthetic.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript xử lý logic -->
+    <script>
+        const productsData = [
+                {
+                        "id": 1,
+                        "name": "Set Cổ Yếm Phối Váy Lụa",
+                        "category": "Set",
+                        "price": 550000,
+                        "colors": {
+                                "Mặc định": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mi7v9mnz6i2wc1.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mi7v9mnz6i2wc1.webp",
+                        "color": "Mặc định",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 2,
+                        "name": "Sét Váy Tơ Phối Ren",
+                        "category": "Set",
+                        "price": 700000,
+                        "colors": {
+                                "Mặc định": "https://down-vn.img.susercontent.com/file/vn-11134201-81ztc-mshqv0qvjugx7d.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134201-81ztc-mshqv0qvjugx7d.webp",
+                        "color": "Mặc định",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 3,
+                        "name": "Set áo trễ vai ren hoa",
+                        "category": "Set",
+                        "price": 600000,
+                        "colors": {
+                                "Mặc định": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mspgnu0gboco86.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mspgnu0gboco86.webp",
+                        "color": "Mặc định",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 4,
+                        "name": "Set váy chấm bi",
+                        "category": "Set",
+                        "price": 400000,
+                        "colors": {
+                                "Be": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqwt7b4gkzd0c6.webp",
+                                "Hồng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqwt7b4gjksk9f.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqwt7b4gkzd0c6.webp",
+                        "color": "Be",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 5,
+                        "name": "Váy Lụa Maxi Cổ Yếm",
+                        "category": "Váy",
+                        "price": 525000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-msb088azif4a9d.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-msb088b2o74629.webp",
+                                "Be": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mrr5gxxpbcaw80.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-msb088azif4a9d.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 6,
+                        "name": "Lụa Maxi Cúp Kèm Khăn Choàng Tag Nơ",
+                        "category": "Váy",
+                        "price": 499000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mnl7mr9mecck60.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mnl7mjr3v30m26.webp",
+                                "Be": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mojhoapf9rta8c.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mnl7mr9mecck60.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 7,
+                        "name": "Lụa tà xòe",
+                        "category": "Váy",
+                        "price": 600000,
+                        "colors": {
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mhx4qpzoogzled.webp",
+                                "Xanh dương": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mhx4qpzod8g229.webp",
+                                "Đỏ": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mhx4qpztlgjna0.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mhx4qpzoogzled.webp",
+                        "color": "Trắng",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 8,
+                        "name": "Váy Lụa Sát Nách Nữ Tính",
+                        "category": "Váy",
+                        "price": 388000,
+                        "colors": {
+                                "Đen": "https://file.hstatic.net/200000503583/file/vay-lua-9_8791cabb8fd341e795ff4f8ed9ce62f0.jpg",
+                                "Xanh dương": "https://file.hstatic.net/1000317075/file/vay-lua-chom-vai-cardina__1_.jpg_5f78aa785c7745df8b5593ecfec412d0.jpg",
+                                "Xanh nhạt": "https://media.karousell.com/media/photos/products/2023/7/14/tpz_topazette_klara_sweetheart_1689313796_5efa569f.jpg"
+                        },
+                        "image": "https://file.hstatic.net/200000503583/file/vay-lua-9_8791cabb8fd341e795ff4f8ed9ce62f0.jpg",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 9,
+                        "name": "Đầm Cổ Yếm Xòe",
+                        "category": "Váy",
+                        "price": 499000,
+                        "colors": {
+                                "Mặc định": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mrbhr8620wsk40.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mrbhr8620wsk40.webp",
+                        "color": "Mặc định",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 10,
+                        "name": "Đầm yếm ren hoa",
+                        "category": "Váy",
+                        "price": 399000,
+                        "colors": {
+                                "Mặc định": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mhla4vmv94w426.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mhla4vmv94w426.webp",
+                        "color": "Mặc định",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 11,
+                        "name": "Đầm Ren Hoa Cổ V",
+                        "category": "Váy",
+                        "price": 445000,
+                        "colors": {
+                                "Mặc định": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqezxwvuxse943.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqezxwvuxse943.webp",
+                        "color": "Mặc định",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 12,
+                        "name": "Đầm ren hoa nổi chân xòe",
+                        "category": "Váy",
+                        "price": 655000,
+                        "colors": {
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mtdef21g3g1xc1.webp",
+                                "Be": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqy999qg229w34.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mtdef21g3g1xc1.webp",
+                        "color": "Trắng",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 13,
+                        "name": "Chân váy lụa chữ A",
+                        "category": "Váy",
+                        "price": 199000,
+                        "colors": {
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqsti5298tfz95.webp",
+                                "Xanh Ngọc": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqbkbzm3z9xe74.webp",
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqsti4tpz37l48.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mqsti5298tfz95.webp",
+                        "color": "Trắng",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 14,
+                        "name": "Chân váy lửng",
+                        "category": "Váy",
+                        "price": 255000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134201-81ztc-mt517nhyn9xh48.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134201-81ztc-mt517nhyn9xh48.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 15,
+                        "name": "Chân váy midi dáng dài",
+                        "category": "Váy",
+                        "price": 200000,
+                        "colors": {
+                                "Mặc định": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mmcwqks1rncz55.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mmcwqks1rncz55.webp",
+                        "color": "Mặc định",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 16,
+                        "name": "Chân váy xếp ly",
+                        "category": "Váy",
+                        "price": 399000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsauxztgz0d5a1.webp",
+                                "Nâu": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsauoqqka18ke5.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsauoqqkl9s445.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsauxztgz0d5a1.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 17,
+                        "name": "Chân váy công sở Lửng",
+                        "category": "Váy",
+                        "price": 299000,
+                        "colors": {
+                                "Mặc định": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lkp7iuukxhpm96.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lkp7iuukxhpm96.webp",
+                        "color": "Mặc định",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 18,
+                        "name": "Chân váy công sở dài",
+                        "category": "Váy",
+                        "price": 350000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-msaxdv5tsnpca3.webp",
+                                "Nâu": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mia2prrsjxfl90.webp",
+                                "Xám kẻ sọc": "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mhcqsyok1amidc.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-msaxdv5tsnpca3.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 19,
+                        "name": "Sơ Mi Lụa Bigsize",
+                        "category": "Áo",
+                        "price": 200000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mr8ul4w6ed5115.webp",
+                                "Hồng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mr8umuegj3eq71.webp",
+                                "Đỏ": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mr8ulwy4eolhd7.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mr8tfvb4rqps7e.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mr8ul4w6ed5115.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 20,
+                        "name": "Sơ mi kẻ sọc",
+                        "category": "Áo",
+                        "price": 200000,
+                        "colors": {
+                                "Xám": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-mb0pyq4v9kzw20.webp",
+                                "Xanh": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-mb0pyq9v0v5t80.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-mb0pyq4v9kzw20.webp",
+                        "color": "Xám",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 21,
+                        "name": "Sơ mi tay lửng",
+                        "category": "Áo",
+                        "price": 0,
+                        "priceLabel": "Đang cập nhật",
+                        "colors": {
+                                "Be": "https://down-vn.img.susercontent.com/file/f3d356319cb32cd2af1c06904756c3ab.webp",
+                                "Xanh Dương": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m26ih2ybp6ludd.webp",
+                                "Hồng": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m26ihbdvczasa0.webp",
+                                "Đỏ": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m26ih2ybp6lwfb.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/34c2bc5e5fa9aa897d3529ce7dbcf6ff.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/f3d356319cb32cd2af1c06904756c3ab.webp",
+                        "color": "Be",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 22,
+                        "name": "CROPTOP tay dài cổ cao",
+                        "category": "Áo",
+                        "price": 155000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/f92625d8e8be77fbf6b19ee24aa88c08.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/4567a6ac8953042c6589788803117a80.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/f92625d8e8be77fbf6b19ee24aa88c08.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 23,
+                        "name": "CROPTOP tay dài cổ V",
+                        "category": "Áo",
+                        "price": 140000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mousmxrzh2x7b5.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mousmxrzlammd8.webp",
+                                "Đỏ": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mousmxruiosic8.webp",
+                                "Nâu": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mousmxrx0l5b23.webp",
+                                "Be": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mousmxrzihhqba.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mousmxrzh2x7b5.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 24,
+                        "name": "Croptop trễ vai",
+                        "category": "Áo",
+                        "price": 130000,
+                        "colors": {
+                                "Đỏ": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mp4sd7a5ks1u03.webp",
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mp4sd79uypl70a.webp",
+                                "Nâu": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mp4sd7avu49995.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mp4sd79cqqdo92.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mp4sd7a5ks1u03.webp",
+                        "color": "Đỏ",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 25,
+                        "name": "Croptop Baby Đan Nơ",
+                        "category": "Áo",
+                        "price": 145000,
+                        "colors": {
+                                "Hồng": "https://down-vn.img.susercontent.com/file/vn-11134211-81ztc-mpkpijz4bt3i5e.webp",
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134211-81ztc-mpkpl340pbt7b3.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134211-81ztc-mpkpijz4bt3i5e.webp",
+                        "color": "Hồng",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 26,
+                        "name": "Quần Đùi Jean",
+                        "category": "Quần",
+                        "price": 200000,
+                        "colors": {
+                                "Xám": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-moqoaap8m8ek15.webp",
+                                "Nâu": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-moqoaap90a3182.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-moqoaap8yvilea.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-moqoaap8m8ek15.webp",
+                        "color": "Xám",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 27,
+                        "name": "Quần short đùi kaki",
+                        "category": "Quần",
+                        "price": 179000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/c39e760ad13d7d836e3b3e15a10c5c65.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/a85a2f961f15ff745f958e0cfc40e181.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/c39e760ad13d7d836e3b3e15a10c5c65.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 28,
+                        "name": "Quần Jean Ống Suông",
+                        "category": "Quần",
+                        "price": 300000,
+                        "colors": {
+                                "Be": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mosh4dopjsi3a1.webp",
+                                "Nâu": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mosh4dommfwgaf.webp",
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mosh4dor5dsedd.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mosh4dopjsi3a1.webp",
+                        "color": "Be",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 29,
+                        "name": "Quần tây ống đứng",
+                        "category": "Quần",
+                        "price": 315000,
+                        "colors": {
+                                "Be": "https://down-vn.img.susercontent.com/file/vn-11134201-23020-ja7ejer4cxnv44.webp",
+                                "Nâu": "https://down-vn.img.susercontent.com/file/vn-11134201-23020-x7dgpdr4cxnva9.webp",
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134201-23020-695cxfr4cxnv60.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134201-23020-ja7ejer4cxnv44.webp",
+                        "color": "Be",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 30,
+                        "name": "Áo Phông Cotton",
+                        "category": "Áo",
+                        "price": 150000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/b18b2d3ba95986da7fd25ccfbe9e661f.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/d12c5c0f95e25488e813137b83b5b6f6.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/b18b2d3ba95986da7fd25ccfbe9e661f.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                },
+                {
+                        "id": 31,
+                        "name": "Áo Phông Họa tiết chữ",
+                        "category": "Áo",
+                        "price": 169000,
+                        "colors": {
+                                "Đen": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mndy1n4q3da86b.webp",
+                                "Trắng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mndxzlflh2ird4.webp",
+                                "Hồng": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mrzbkrs50d8h0a.webp"
+                        },
+                        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mndy1n4q3da86b.webp",
+                        "color": "Đen",
+                        "sizes": [
+                                "S",
+                                "M",
+                                "L"
+                        ]
+                }
+        ];
+
+        let currentCart = [
+            { id: 1, name: "Set Cổ Yếm Phối Váy Lụa", price: 550000, image: "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-mi7v9mnz6i2wc1.webp", color: "Mặc định", size: "M", qty: 1 },
+            { id: 8, name: "Váy Lụa Sát Nách Nữ Tính", price: 388000, image: "https://file.hstatic.net/200000503583/file/vay-lua-9_8791cabb8fd341e795ff4f8ed9ce62f0.jpg", color: "Đen", size: "M", qty: 1 }
+        ];
+        let wishlist = [];
+        let filteredProducts = [...productsData];
+        let currentDetailProduct = productsData[0];
+        let currentDetailSelectedColor = Object.keys(productsData[0].colors)[0];
+        let currentDetailSelectedSize = "M";
+        let currentDetailQty = 1;
+        let appliedCouponDiscount = 0;
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page-view').forEach(view => view.classList.add('hidden'));
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('border-mive-primary');
+                link.classList.add('border-transparent');
+            });
+            const activeNav = document.getElementById('nav-' + pageId);
+            if (activeNav) {
+                activeNav.classList.add('border-mive-primary');
+                activeNav.classList.remove('border-transparent');
+            }
+
+            if (pageId === 'cart') renderCartView();
+        }
+
+        function goToCategory(category) {
+            navigateTo('shop');
+            filterCategory(category);
+        }
+
+        function renderHomeProducts() {
+            const container = document.getElementById('home-products-grid');
+            if (!container) return;
+            container.innerHTML = productsData.slice(0, 4).map(prod => createProductCardHTML(prod)).join('');
+        }
+
+        function renderShopProducts() {
+            const container = document.getElementById('shop-products-grid');
+            if (!container) return;
+            container.innerHTML = filteredProducts.map(prod => createProductCardHTML(prod)).join('');
+            document.getElementById('product-count-label').innerText = `Hiển thị ${filteredProducts.length} sản phẩm`;
+        }
+
+        function getProductPriceLabel(prod) {
+            return prod.priceLabel || (Number(prod.price) || 0).toLocaleString('vi-VN') + 'đ';
+        }
+
+        function createProductCardHTML(prod) {
+            const formattedPrice = getProductPriceLabel(prod);
+            const isWishlisted = wishlist.includes(prod.id);
+            return `
+                <div class="group relative bg-white border border-mive-border rounded-sm overflow-hidden flex flex-col justify-between">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-mive-lightBeige cursor-pointer" onclick="openDetailView(${prod.id})">
+                        <img src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <button onclick="event.stopPropagation(); toggleWishlist(${prod.id})" class="absolute top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-sm text-mive-primary hover:text-red-500 transition-colors">
+                            <svg class="w-4 h-4 ${isWishlisted ? 'fill-red-500 text-red-500' : 'fill-none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-4.564-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        </button>
+                    </div>
+                    <div class="p-4 space-y-2 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h4 onclick="openDetailView(${prod.id})" class="text-xs uppercase font-medium text-mive-primary cursor-pointer hover:text-mive-accent transition-colors line-clamp-2">${prod.name}</h4>
+                            <p class="text-sm font-semibold text-mive-primary mt-1">${formattedPrice}</p>
+                        </div>
+                        <button onclick="quickAddToCart(${prod.id})" class="w-full mt-2 bg-mive-bg border border-mive-primary text-mive-primary text-[11px] uppercase tracking-wider py-2 font-medium hover:bg-mive-primary hover:text-white transition-colors">
+                            + Thêm vào giỏ
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterCategory(cat) {
+            if (cat === 'all') filteredProducts = [...productsData];
+            else filteredProducts = productsData.filter(p => p.category === cat);
+            renderShopProducts();
+        }
+
+        function toggleSizeFilter(size) {
+            filteredProducts = productsData.filter(p => p.sizes.includes(size));
+            renderShopProducts();
+        }
+
+        function filterColor(colorName) {
+            filteredProducts = productsData.filter(p => Object.keys(p.colors || {}).includes(colorName));
+            renderShopProducts();
+        }
+
+        function resetFilters() {
+            filteredProducts = [...productsData];
+            renderShopProducts();
+        }
+
+        function sortProducts() {
+            const val = document.getElementById('sort-select').value;
+            if (val === 'price-asc') filteredProducts.sort((a,b) => (Number(a.price) || 0) - (Number(b.price) || 0));
+            else if (val === 'price-desc') filteredProducts.sort((a,b) => (Number(b.price) || 0) - (Number(a.price) || 0));
+            else filteredProducts = [...productsData];
+            renderShopProducts();
+        }
+
+        function toggleWishlist(prodId) {
+            if (wishlist.includes(prodId)) {
+                wishlist = wishlist.filter(id => id !== prodId);
+                showToast("Đã xoá khỏi danh sách yêu thích");
+            } else {
+                wishlist.push(prodId);
+                showToast("Đã thêm vào danh sách yêu thích ♥");
+            }
+            document.getElementById('wishlist-count').innerText = wishlist.length;
+            renderHomeProducts();
+            renderShopProducts();
+        }
+
+        function getFirstColor(prod) {
+            const colors = prod.colors || {};
+            const first = Object.keys(colors)[0];
+            return {
+                name: first || prod.color || 'Mặc định',
+                image: (first && colors[first]) || prod.image
+            };
+        }
+
+        function quickAddToCart(prodId) {
+            const prod = productsData.find(p => p.id === prodId);
+            if (!prod) return;
+            const firstColor = getFirstColor(prod);
+            const existing = currentCart.find(c => c.id === prodId && c.color === firstColor.name && c.size === (prod.sizes[0] || 'S'));
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                currentCart.push({
+                    id: prod.id,
+                    name: prod.name,
+                    price: Number(prod.price) || 0,
+                    image: firstColor.image,
+                    color: firstColor.name,
+                    size: prod.sizes[0] || 'S',
+                    qty: 1
+                });
+            }
+            updateCartBadge();
+            showToast(`Đã thêm ${prod.name} vào giỏ hàng!`);
+        }
+
+        function colorToCSS(colorName) {
+            const map = {
+                'Đen': '#000000', 'Trắng': '#ffffff', 'Be': '#E5D3B3', 'Nâu': '#795548',
+                'Hồng': '#F3A6BE', 'Đỏ': '#B3261E', 'Xanh': '#4F83CC', 'Xanh dương': '#3B82F6',
+                'Xanh Dương': '#3B82F6', 'Xanh nhạt': '#BAE6FD', 'Xanh Ngọc': '#67C6B6',
+                'Xám': '#9CA3AF', 'Xám kẻ sọc': '#6B7280', 'Mặc định': '#D8CEC3'
+            };
+            return map[colorName] || '#D8CEC3';
+        }
+
+        function renderDetailColorOptions() {
+            const container = document.getElementById('detail-color-options');
+            const thumbContainer = document.getElementById('detail-thumbnails');
+            if (!container || !thumbContainer || !currentDetailProduct) return;
+
+            const entries = Object.entries(currentDetailProduct.colors || { 'Mặc định': currentDetailProduct.image });
+            if (!entries.some(([name]) => name === currentDetailSelectedColor)) {
+                currentDetailSelectedColor = entries[0][0];
+            }
+
+            document.getElementById('selected-color-name').innerText = currentDetailSelectedColor;
+            container.innerHTML = entries.map(([colorName, image]) => `
+                <button type="button"
+                    onclick="selectDetailColor(${JSON.stringify(colorName)}, this)"
+                    class="detail-color-btn w-8 h-8 rounded-full border-2 ${colorName === currentDetailSelectedColor ? 'border-mive-primary' : 'border-transparent'} focus:outline-none hover:border-mive-muted"
+                    style="background:${colorToCSS(colorName)}"
+                    title="${colorName}">
+                </button>
+            `).join('');
+
+            thumbContainer.innerHTML = entries.map(([colorName, image]) => `
+                <img src="${image}"
+                    onclick="selectDetailColor(${JSON.stringify(colorName)}, this)"
+                    class="detail-thumb w-16 h-20 object-cover border ${colorName === currentDetailSelectedColor ? 'border-mive-primary' : 'border-transparent'} cursor-pointer hover:opacity-80"
+                    alt="${colorName}">
+            `).join('');
+        }
+
+        function openDetailView(prodId) {
+            const prod = productsData.find(p => p.id === prodId) || productsData[0];
+            currentDetailProduct = prod;
+            const firstColor = getFirstColor(prod);
+            currentDetailSelectedColor = firstColor.name;
+            currentDetailSelectedSize = prod.sizes[0] || 'S';
+            currentDetailQty = 1;
+            document.getElementById('detail-title').innerText = prod.name;
+            document.getElementById('detail-breadcrumb').innerText = prod.name;
+            document.getElementById('detail-price').innerText = getProductPriceLabel(prod);
+            document.getElementById('detail-main-img').src = firstColor.image;
+            document.getElementById('detail-qty').innerText = currentDetailQty;
+            document.querySelectorAll('.detail-size-btn').forEach(b => {
+                b.classList.remove('border-2', 'border-mive-primary', 'font-semibold');
+                b.classList.add('border', 'border-mive-border', 'font-medium');
+            });
+            const defaultSizeBtn = document.querySelector(`.detail-size-btn[data-size="${currentDetailSelectedSize}"]`);
+            if (defaultSizeBtn) {
+                defaultSizeBtn.classList.remove('border', 'border-mive-border', 'font-medium');
+                defaultSizeBtn.classList.add('border-2', 'border-mive-primary', 'font-semibold');
+            }
+            renderDetailColorOptions();
+            navigateTo('detail');
+        }
+
+        function switchDetailImage(src) {
+            document.getElementById('detail-main-img').src = src;
+        }
+
+        function selectDetailColor(colorName, btn) {
+            currentDetailSelectedColor = colorName;
+            document.getElementById('selected-color-name').innerText = colorName;
+
+            const colorImages = currentDetailProduct?.colors || {};
+            if (colorImages[colorName]) {
+                document.getElementById('detail-main-img').src = colorImages[colorName];
+            }
+
+            document.querySelectorAll('.detail-color-btn').forEach(b => {
+                b.classList.remove('border-mive-primary');
+                b.classList.add('border-transparent');
+            });
+            if (btn && btn.classList.contains('detail-color-btn')) {
+                btn.classList.remove('border-transparent');
+                btn.classList.add('border-mive-primary');
+            }
+
+            document.querySelectorAll('.detail-thumb').forEach(img => {
+                img.classList.remove('border-mive-primary');
+                img.classList.add('border-transparent');
+            });
+            document.querySelectorAll('.detail-thumb').forEach(img => {
+                if (img.alt === colorName) {
+                    img.classList.remove('border-transparent');
+                    img.classList.add('border-mive-primary');
+                }
+            });
+        }
+
+        function selectDetailSize(size, btn) {
+            currentDetailSelectedSize = size;
+            document.querySelectorAll('.detail-size-btn').forEach(b => {
+                b.classList.remove('border-2', 'border-mive-primary', 'font-semibold');
+                b.classList.add('border', 'border-mive-border', 'font-medium');
+            });
+            btn.classList.remove('border', 'border-mive-border', 'font-medium');
+            btn.classList.add('border-2', 'border-mive-primary', 'font-semibold');
+        }
+
+        function adjustDetailQty(delta) {
+            currentDetailQty = Math.max(1, currentDetailQty + delta);
+            document.getElementById('detail-qty').innerText = currentDetailQty;
+        }
+
+        function addCurrentDetailToCart() {
+            const selectedImage = currentDetailProduct?.colors?.[currentDetailSelectedColor] || currentDetailProduct.image;
+            const existing = currentCart.find(c => c.id === currentDetailProduct.id && c.color === currentDetailSelectedColor && c.size === currentDetailSelectedSize);
+            if (existing) {
+                existing.qty += currentDetailQty;
+            } else {
+                currentCart.push({
+                    id: currentDetailProduct.id,
+                    name: currentDetailProduct.name,
+                    price: Number(currentDetailProduct.price) || 0,
+                    image: selectedImage,
+                    color: currentDetailSelectedColor,
+                    size: currentDetailSelectedSize,
+                    qty: currentDetailQty
+                });
+            }
+            updateCartBadge();
+            showToast(`Đã thêm ${currentDetailProduct.name} - ${currentDetailSelectedColor} / Size ${currentDetailSelectedSize} (x${currentDetailQty}) vào giỏ hàng!`);
+        }
+
+        function renderCartView() {
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            
+            if (currentCart.length === 0) {
+                container.innerHTML = '';
+                emptyMsg.classList.remove('hidden');
+            } else {
+                emptyMsg.classList.add('hidden');
+                container.innerHTML = currentCart.map((item, index) => `
+                    <div class="flex flex-col sm:flex-row items-center justify-between border-b border-mive-border pb-4 gap-4">
+                        <div class="flex items-center space-x-4 w-full sm:w-auto">
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-20 object-cover rounded-sm border border-mive-border">
+                            <div>
+                                <h4 class="text-xs font-semibold text-mive-primary uppercase">${item.name}</h4>
+                                <p class="text-[11px] text-mive-muted mt-1">Phân loại: ${item.color} / Size ${item.size}</p>
+                                <p class="text-xs font-bold text-mive-primary mt-1">${(Number(item.price) || 0).toLocaleString('vi-VN')}đ</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between w-full sm:w-auto gap-6">
+                            <div class="flex items-center border border-mive-border bg-mive-bg">
+                                <button onclick="updateCartQty(${index}, -1)" class="px-2.5 py-1 text-xs text-mive-primary hover:bg-mive-lightBeige">-</button>
+                                <span class="px-3 text-xs font-semibold">${item.qty}</span>
+                                <button onclick="updateCartQty(${index}, 1)" class="px-2.5 py-1 text-xs text-mive-primary hover:bg-mive-lightBeige">+</button>
+                            </div>
+                            <span class="text-xs font-bold text-mive-primary">${((Number(item.price) || 0) * item.qty).toLocaleString('vi-VN')}đ</span>
+                            <button onclick="removeCartItem(${index})" class="text-mive-muted hover:text-red-500 text-xs">✕</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            calculateCartTotals();
+        }
+
+        function updateCartQty(index, delta) {
+            currentCart[index].qty += delta;
+            if (currentCart[index].qty <= 0) currentCart.splice(index, 1);
+            updateCartBadge();
+            renderCartView();
+        }
+
+        function removeCartItem(index) {
+            currentCart.splice(index, 1);
+            updateCartBadge();
+            renderCartView();
+            showToast("Đã xoá sản phẩm khỏi giỏ hàng");
+        }
+
+        function calculateCartTotals() {
+            const subtotal = currentCart.reduce((sum, item) => sum + ((Number(item.price) || 0) * item.qty), 0);
+            const freeshipThreshold = 490000;
+            const shippingFee = subtotal >= freeshipThreshold || subtotal === 0 ? 0 : 30000;
+            const grandTotal = Math.max(0, subtotal + shippingFee - appliedCouponDiscount);
+
+            document.getElementById('cart-subtotal').innerText = subtotal.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('cart-shipping').innerText = shippingFee === 0 ? 'Miễn phí' : shippingFee.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('cart-grand-total').innerText = grandTotal.toLocaleString('vi-VN') + 'đ';
+
+            const needed = Math.max(0, freeshipThreshold - subtotal);
+            const progress = Math.min(100, (subtotal / freeshipThreshold) * 100);
+            document.getElementById('freeship-bar').style.width = progress + '%';
+            if (needed === 0) {
+                document.getElementById('freeship-text').innerHTML = "🎉 Bạn đã đủ điều kiện nhận <span class='font-bold text-green-600'>FREESHIP!</span>";
+            } else {
+                document.getElementById('freeship-text').innerHTML = `Bạn cần mua thêm <span class='font-bold text-mive-accent'>${needed.toLocaleString('vi-VN')}đ</span> để nhận FREESHIP!`;
+            }
+        }
+
+        function applyCoupon() {
+            const val = document.getElementById('coupon-input').value.trim().toUpperCase();
+            if (val === 'MIVENEW') {
+                appliedCouponDiscount = 50000;
+                document.getElementById('discount-row').classList.remove('hidden');
+                calculateCartTotals();
+                showToast("Đã áp dụng mã giảm giá MIVENEW (-50k)");
+            } else {
+                showToast("Mã giảm giá không hợp lệ (Thử 'MIVENEW')");
+            }
+        }
+
+        function processCheckout() {
+            if (currentCart.length === 0) {
+                showToast("Giỏ hàng của bạn đang trống!");
+                return;
+            }
+            alert("Cảm ơn bạn đã đặt hàng tại MIVÉ! Đơn hàng của bạn đang được xử lý.");
+            currentCart = [];
+            updateCartBadge();
+            renderCartView();
+            navigateTo('home');
+        }
+
+        function updateCartBadge() {
+            const totalQty = currentCart.reduce((sum, i) => sum + i.qty, 0);
+            document.getElementById('cart-badge').innerText = totalQty;
+        }
+
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.innerText = '+';
+            } else {
+                content.classList.add('open');
+                icon.innerText = '-';
+            }
+        }
+
+        function switchAuthTab(tab) {
+            const formLogin = document.getElementById('form-login');
+            const formReg = document.getElementById('form-register');
+            const tabLogin = document.getElementById('tab-login');
+            const tabReg = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                formLogin.classList.remove('hidden');
+                formReg.classList.add('hidden');
+                tabLogin.classList.add('border-mive-primary', 'text-mive-primary');
+                tabLogin.classList.remove('border-transparent', 'text-mive-muted');
+                tabReg.classList.remove('border-mive-primary', 'text-mive-primary');
+                tabReg.classList.add('border-transparent', 'text-mive-muted');
+            } else {
+                formLogin.classList.add('hidden');
+                formReg.classList.remove('hidden');
+                tabReg.classList.add('border-mive-primary', 'text-mive-primary');
+                tabReg.classList.remove('border-transparent', 'text-mive-muted');
+                tabLogin.classList.remove('border-mive-primary', 'text-mive-primary');
+                tabLogin.classList.add('border-transparent', 'text-mive-muted');
+            }
+        }
+
+        function handleAuthSubmit(event, type) {
+            event.preventDefault();
+            if (type === 'login') {
+                showToast("Đăng nhập thành công! Chào mừng trở lại MIVÉ.");
+            } else {
+                showToast("Tạo tài khoản thành công! Bạn đã nhận ưu đãi 10%.");
+            }
+            navigateTo('home');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        function closeMobileMenu() {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "pointer-events-auto bg-mive-primary text-white text-xs px-4 py-3 rounded shadow-lg border border-mive-accent flex items-center space-x-2 transition-all duration-300 transform translate-y-2 opacity-0";
+            toast.innerHTML = `<span>✨</span><span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        window.onload = function() {
+            renderHomeProducts();
+            renderShopProducts();
+            updateCartBadge();
+        };
+    </script>
+</body>
+</html>
